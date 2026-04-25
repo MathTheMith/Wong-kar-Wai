@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include "libft.h"
 
-#define BOARD_SIZE 2
-
 enum e_const
 {
     WIN_VALUE = 2048

@@ -20,7 +20,7 @@ int ft_intlen(int n)
 
 void draw_separation(t_board board)
 {
-    for (int i = 0; i < BOARD_SIZE; i++)
+    for (int i = 0; i < board.size; i++)
     {
         printw("+");
         for (int j = 0; j < board.tiles_w - 1; j++)
@@ -31,7 +31,7 @@ void draw_separation(t_board board)
 
 void draw_line(t_board board)
 {
-    for (int i = 0; i < BOARD_SIZE; i++)
+    for (int i = 0; i < board.size; i++)
     {
         printw("|");
         for (int j = 0; j < board.tiles_w - 1; j++)
@@ -114,9 +114,9 @@ void set_color(int nb)
 void put_numbers(int **tab, t_board board)
 {
 
-    for (int i = 0; i < BOARD_SIZE; i++)
+    for (int i = 0; i < board.size; i++)
     {
-        for (int j = 0; j < BOARD_SIZE; j++)
+        for (int j = 0; j < board.size; j++)
         {
             int y = j * (board.tiles_h - 1);
             int x = i * (board.tiles_w);
@@ -133,9 +133,9 @@ void put_numbers(int **tab, t_board board)
             standend();
         }
     }
-    for (int i = 0; i < BOARD_SIZE; i++)
+    for (int i = 0; i < board.size; i++)
     {
-        for (int j = 0; j < BOARD_SIZE; j++)
+        for (int j = 0; j < board.size; j++)
         {
             int y = (i * board.tiles_h + board.tiles_h / 2) - i;
             int x = (j * board.tiles_w + board.tiles_w / 2) - (ft_intlen(tab[i][j]) / 2);
@@ -154,9 +154,9 @@ void draw_board(t_board board, int **tab)
     int h, w;
     getmaxyx(stdscr, h, w);
 
-    board.tiles_w = (w - 2) / BOARD_SIZE;
-    board.tiles_h = (h + 2) / BOARD_SIZE;
-    for (int i = 0; i < BOARD_SIZE; i++)
+    board.tiles_w = (w - 2) / board.size;
+    board.tiles_h = (h + 2) / board.size;
+    for (int i = 0; i < board.size; i++)
     {
         draw_separation(board);
         for(int j = 0; j < board.tiles_h - 2; j++)
