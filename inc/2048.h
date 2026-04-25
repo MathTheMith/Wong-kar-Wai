@@ -33,4 +33,7 @@ int  show_menu(void);
 int  win_menu(void);
 int  loose_menu(void);
 
+int load_score(char buffer[256]);
+int write_score(int score);
+
 #endif
