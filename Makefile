@@ -12,7 +12,7 @@
 
 .PHONY : all fclean re bonus clean-bin clean-obj
 CC = cc
-CFLAGS = -Wextra -Wall -Werror -MMD -MP -Ofast
+CFLAGS = -Wextra -Wall -Werror -MMD -MP -Ofast -g3
 NO_DIR = --no-print-directory
 MAKE := $(MAKE) -j $(NO_DIR)
 NAME = 2048

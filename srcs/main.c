@@ -48,16 +48,13 @@ int main()
 {
     t_board board;
     int ch;
-    int **game_board;
     int tab[4][4] = {
-        {2, 2, 4, 2},
-        {0, 0, 2, 0},
-        {0, 0, 0, 0},
-        {0, 4, 0, 0}
+        {1, 0, 2, 0},
+        {0, 0, 204, 0},
+        {0, 0, 0, 4},
+        {0, 7, 0, 8}
     };
     board.size = 4;
-    game_board = init_game_board(4);
-    apply_board(tab, game_board);
     initscr();
     noecho();
     start_color();
