@@ -2,6 +2,8 @@
 #define GAME_2048_H
 
 #include <ncurses.h>
+#include <stdlib.h>
+#include "libft.h"
 
 enum e_const
 {
