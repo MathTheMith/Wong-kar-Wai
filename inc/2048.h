@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 #include <stdlib.h>
+#include <time.h>
 #include "libft.h"
 
 # define SAVE_FILE "save.txt"
