@@ -39,6 +39,49 @@ int **init_game_board(int size)
     return game_board;
 }
 
+int randint(int range)
+{
+    return rand() % range;
+}
+
+void spawn_rand(int **game_board, int size, int n_rand)
+{
+    int tab[size * size];
+    int range;
+    int n;
+
+    for (int k = 0; k < n_rand; k++)
+    {
+        range = size * size;
+        for (int i = 0; i < range; i++)
+            tab[i] = 0;
+
+        while (1)
+        {
+            n = randint(range);
+            while (tab[n] == 1 && n < size * size)
+                n++;
+
+            if (game_board[n / size][n % size] != 0)
+            {
+                tab[n] = 1;
+                range--;
+            }
+            else if (randint(100) < 90)
+            {
+                game_board[n / size][n % size] = 2;
+                break;
+            }
+            else
+            {
+                game_board[n / size][n % size] = 4;
+                break;
+            }
+            
+        }
+    }
+}
+
 void update_horizontal(int **game_board, int size, int move)
 {
     int j_start;
@@ -54,7 +97,7 @@ void update_horizontal(int **game_board, int size, int move)
         {
             last_j = j;
 
-            for (int k = j - move; game_board[i][last_j] != 0 && 0 <= k && k < size; k -= move)
+            for (int k = j - move; game_board[i][last_j] >= 0 && 0 <= k && k < size; k -= move)
             {
                 if (game_board[i][k] == 0)
                 {
@@ -118,16 +161,28 @@ void update_vertical(int **game_board, int size, int move)
 void update_game_board(int **game_board, int size, int ch)
 {
     if (ch == KEY_LEFT)
+    {
         update_horizontal(game_board, size, 1);
+        spawn_rand(game_board, size, 1);
+    }
 
     else if (ch == KEY_RIGHT)
+    {
         update_horizontal(game_board, size, -1);
+        spawn_rand(game_board, size, 1);
+    }
 
     else if (ch == KEY_UP)
+    {
         update_vertical(game_board, size, 1);
+        spawn_rand(game_board, size, 1);
+    }
 
     else if (ch == KEY_DOWN)
+    {
         update_vertical(game_board, size, -1);
+        spawn_rand(game_board, size, 1);
+    }
 
     for (int i = 0; i < size; i++)
     {
