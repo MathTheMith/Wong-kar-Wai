@@ -52,7 +52,11 @@ int main()
         endwin();
         return 0;
     }
+<<<<<<< HEAD
     int result;
+=======
+
+>>>>>>> d0c9902 (feat: menu design made)
     srand(time(NULL));
     game_board = init_game_board(board.size);
     spawn_rand(game_board, board.size, 2);
@@ -63,8 +67,13 @@ int main()
         ch = getch();
         if (ch == 27)
             break;
+<<<<<<< HEAD
         result = check_finish(game_board, board);
         if (result == 0)
+=======
+
+        if (!check_finish(game_board, board))
+>>>>>>> d0c9902 (feat: menu design made)
         {
             erase();
             update_game_board(game_board, board.size, ch);
@@ -77,8 +86,13 @@ int main()
         }
         else
         {
+<<<<<<< HEAD
             loose_menu();
             break;
+=======
+            erase();
+            printw("You won!!");
+>>>>>>> d0c9902 (feat: menu design made)
         }
         refresh();
     }
