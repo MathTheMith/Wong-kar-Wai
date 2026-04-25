@@ -39,6 +39,9 @@ P_OBJ = .obj/
 SRC = \
 	  main.c \
 	  draw_board.c \
+	  game_board.c \
+	  libft/ft_calloc.c \
+	  libft/ft_bzero.c \
 
 #############################################################################################
 #                                                                                           #
