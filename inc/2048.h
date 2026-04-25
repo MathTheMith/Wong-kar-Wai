@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "libft.h"
 
+# define SAVE_FILE "save.txt"
+
 enum e_const
 {
     WIN_VALUE = 2048
