@@ -12,6 +12,7 @@ enum e_const
 
 typedef struct board
 {
+    int size;
     int tiles_h;
     int tiles_w;
     int old_tiles_w;
