@@ -5,13 +5,13 @@ bool is_power_of_two(int n)
     return (n > 0 && (n & (n - 1)) == 0);
 }
 
-bool check_finish(int tab[4][4])
+bool check_finish(int **tab)
 {
     bool full = true;
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < BOARD_SIZE; i++)
     {
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < BOARD_SIZE; j++)
         {
             if (tab[i][j] == WIN_VALUE && is_power_of_two(WIN_VALUE))
                 return true;
@@ -25,36 +25,36 @@ bool check_finish(int tab[4][4])
 }
 
 
-void apply_board(int tab[4][4], int **game_board)
+void apply_board(int **tab, int **game_board)
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < BOARD_SIZE; i++)
     {
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < BOARD_SIZE; j++)
             game_board[i][j] = tab[i][j];
     }
 }
 
-void apply_tab(int tab[4][4], int **game_board)
-{
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 4; j++)
-            tab[i][j] = game_board[i][j];
-    }
-}
+// void apply_tab(int **tab, int **game_board)
+// {
+//     for (int i = 0; i < BOARD_SIZE; i++)
+//     {
+//         for (int j = 0; j < BOARD_SIZE; j++)
+//             tab[i][j] = game_board[i][j];
+//     }
+// }
 
 
 int main()
 {
     t_board board;
     int ch;
-    int tab[4][4] = {
-        {1, 0, 2, 0},
-        {0, 0, 204, 0},
-        {0, 0, 0, 4},
-        {0, 7, 0, 8}
-    };
-    board.size = 4;
+    // int tab[4][4] = {
+    //     {1, 0, 2, 0},
+    //     {0, 0, 204, 0},
+    //     {0, 0, 0, 4},
+    //     {0, 7, 0, 8}
+    // };
+    board.size = BOARD_SIZE;
     initscr();
     noecho();
     start_color();
@@ -81,20 +81,26 @@ int main()
     //     if (ch == '4' || ch == '5')
     //         break;
     // }
+    int **game_board;
+    game_board = init_game_board(BOARD_SIZE);
     while (1)
     {
         ch = getch();
         if (ch == 27)
             break;
-        
-        erase();
-        update_game_board(game_board, 4, ch);
-        apply_tab(tab, game_board);
-        draw_board(board, tab);
-        if (check_finish(tab))
+        if (!check_finish(game_board))
+        {
+            
+            erase();
+            update_game_board(game_board, BOARD_SIZE, ch);
+            // apply_tab(tab, game_board);
+            draw_board(board, game_board);
+        }
+        else
         {
             erase();
             printw("You won!!");
+            refresh();
         }
         refresh();
     }
