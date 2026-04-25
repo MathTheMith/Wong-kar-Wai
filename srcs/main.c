@@ -88,11 +88,9 @@ int main()
             break;
         
         erase();
-
         update_game_board(game_board, 4, ch);
         apply_tab(tab, game_board);
-
-        draw_board(tab);
+        draw_board(board, tab);
         if (check_finish(tab))
         {
             erase();
