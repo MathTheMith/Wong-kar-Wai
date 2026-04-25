@@ -15,95 +15,19 @@ bool check_around(int **tab, int i, int j, int size)
     return false;
 }
 
-bool check_finish(int **tab, t_board board)
+int check_finish(int **tab, t_board board)
 {
     for (int i = 0; i < board.size; i++)
-    {
         for (int j = 0; j < board.size; j++)
-        {
             if (tab[i][j] == WIN_VALUE)
-                return true;
-            if (tab[i][j] == 0)
-                return false;
-            if (check_around(tab, i, j, board.size))
-                return false;
-        }
-    }
-    return true;
-}
+                return 1;
 
-int show_menu(void)
-{
-    int ch, h, w, cx, cy, bx, by;
+    for (int i = 0; i < board.size; i++)
+        for (int j = 0; j < board.size; j++)
+            if (tab[i][j] == 0 || check_around(tab, i, j, board.size))
+                return 0;
 
-    init_pair(20, COLOR_YELLOW, -1);
-    init_pair(21, COLOR_RED,    -1);
-    init_pair(23, COLOR_CYAN,   -1);
-
-    nodelay(stdscr, FALSE);
-    while (1)
-    {
-        erase();
-        getmaxyx(stdscr, h, w);
-        cx = w / 2;
-        cy = h / 2;
-        bx = cx - 17;
-        by = cy;
-        if (h > 20)
-        {
-            attron(A_BOLD | COLOR_PAIR(20));
-            mvprintw(cy - 8, cx - 9, "##   ###  # #  ###");
-            mvprintw(cy - 7, cx - 9, "  #  # #  # #  # #");
-            mvprintw(cy - 6, cx - 9, " ##  # #  ###  ###");
-            mvprintw(cy - 5, cx - 9, "#    # #    #  # #");
-            mvprintw(cy - 4, cx - 9, "###  ###    #  ###");
-            standend();
-            attron(A_DIM);
-            mvprintw(cy - 2, cx - 14, "Combine tiles and reach 2048!");
-            standend();
-        }
-        else
-            by -= 5;
-        if (w > 35)
-        {
-            attron(COLOR_PAIR(23));
-            mvprintw(by,     bx, "+--------------------------------+");
-            mvprintw(by + 1, bx, "|                                |");
-            mvprintw(by + 2, bx, "|   Select your board size:      |");
-            mvprintw(by + 3, bx, "|                                |");
-            mvprintw(by + 4, bx, "|   Press  2 - 9   to start      |");
-            mvprintw(by + 5, bx, "|   Press  ESC     to quit       |");
-            mvprintw(by + 6, bx, "|                                |");
-            mvprintw(by + 7, bx, "+--------------------------------+");
-            standend();
-    
-            attron(A_BOLD | COLOR_PAIR(21));
-            mvprintw(by + 4, bx + 11, "2 - 9");
-            mvprintw(by + 5, bx + 11, "ESC");
-            standend();
-        }
-        else
-        {
-            attron(COLOR_PAIR(23));
-            mvprintw(by + 4, cx - 5, "Press  2 - 9");
-            mvprintw(by + 5, cx - 3, "to start");
-            standend();
-
-        }
-        refresh();
-
-        ch = getch();
-        if (ch == 27)
-        {
-            nodelay(stdscr, TRUE);
-            return -1;
-        }
-        if (ch >= '2' && ch <= '9')
-        {
-            nodelay(stdscr, TRUE);
-            return ch - '0';
-        }
-    }
+    return 2;
 }
 
 int main()
@@ -128,7 +52,7 @@ int main()
         endwin();
         return 0;
     }
-
+    int result;
     srand(time(NULL));
     game_board = init_game_board(board.size);
     spawn_rand(game_board, board.size, 2);
@@ -139,17 +63,22 @@ int main()
         ch = getch();
         if (ch == 27)
             break;
-
-        if (!check_finish(game_board, board))
+        result = check_finish(game_board, board);
+        if (result == 0)
         {
             erase();
             update_game_board(game_board, board.size, ch);
             draw_board(board, game_board);
         }
+        else if (result == 1)
+        {
+            win_menu();
+            break;
+        }
         else
         {
-            erase();
-            printw("You won!!");
+            loose_menu();
+            break;
         }
         refresh();
     }

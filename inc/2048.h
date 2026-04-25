@@ -29,5 +29,8 @@ int **init_game_board(int size);
 void free_board(int **game_board, int size);
 int update_game_board(int **game_board, int size, int ch);
 void spawn_rand(int **game_board, int size, int n_rand);
+int  show_menu(void);
+int  win_menu(void);
+int  loose_menu(void);
 
 #endif
