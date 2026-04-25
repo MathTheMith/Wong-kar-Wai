@@ -15,9 +15,6 @@ int **init_game_board(int size)
 {
     int **game_board;
 
-    // if (size < 4 || size > 5)
-    //     return NULL;
-
     game_board = ft_calloc(size, sizeof(int *));
     if (game_board == NULL)
         return NULL;
@@ -77,7 +74,8 @@ void spawn_rand(int **game_board, int size, int n_rand)
                 game_board[n / size][n % size] = 4;
                 break;
             }
-            
+            if (range == 0)
+                break;
         }
     }
 }
