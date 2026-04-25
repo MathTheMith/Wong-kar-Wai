@@ -48,15 +48,11 @@ int main()
 {
     int ch;
     int **game_board;
-    int tab[4][4] = {
-        {2, 2, 4, 2},
-        {0, 0, 2, 0},
-        {0, 0, 0, 0},
-        {0, 4, 0, 0}
-    };
+    int tab[4][4];
 
     game_board = init_game_board(4);
-    apply_board(tab, game_board);
+
+    spawn_rand(game_board, 4, 2);
 
     initscr();
     noecho();
