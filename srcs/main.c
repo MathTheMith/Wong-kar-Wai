@@ -46,21 +46,41 @@ void apply_tab(int tab[4][4], int **game_board)
 
 int main()
 {
+    t_board board;
     int ch;
-    int **game_board;
-    int tab[4][4];
-
-    game_board = init_game_board(4);
-
-    spawn_rand(game_board, 4, 2);
-
+    int tab[4][4] = {
+        {1, 0, 2, 0},
+        {0, 0, 204, 0},
+        {0, 0, 0, 4},
+        {0, 7, 0, 8}
+    };
+    board.size = 4;
     initscr();
     noecho();
+    start_color();
+    use_default_colors();
     curs_set(0);
     set_escdelay(0);
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
+    // while (1)
+    // {
+    //     erase();
+    //     printw("What size of board would you want ?\n");
+    //     printw("4x4 (click 4)\n");
+    //     printw("5x5 (click 5)\n");
 
+    //     refresh();
+
+    //     ch = getch();
+
+    //     if (ch == '4')
+    //         board.size = 4;
+    //     if (ch == '5')
+    //         board.size = 5;
+    //     if (ch == '4' || ch == '5')
+    //         break;
+    // }
     while (1)
     {
         ch = getch();
@@ -68,11 +88,15 @@ int main()
             break;
         
         erase();
+<<<<<<< HEAD
 
         update_game_board(game_board, 4, ch);
         apply_tab(tab, game_board);
 
         draw_board(tab);
+=======
+        draw_board(board, tab);
+>>>>>>> f924482 (feat: colors added, landing page done)
         if (check_finish(tab))
         {
             erase();
