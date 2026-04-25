@@ -22,5 +22,6 @@ void draw_board(int tab[4][4]);
 int **init_game_board(int size);
 void free_board(int **game_board, int size);
 void update_game_board(int **game_board, int size, int ch);
+void spawn_rand(int **game_board, int size, int n_rand);
 
 #endif
