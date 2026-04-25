@@ -22,7 +22,7 @@ typedef struct board
 void draw_board(t_board board, int **tab);
 int **init_game_board(int size);
 void free_board(int **game_board, int size);
-void update_game_board(int **game_board, int size, int ch);
+int update_game_board(int **game_board, int size, int ch);
 void spawn_rand(int **game_board, int size, int n_rand);
 
 #endif
