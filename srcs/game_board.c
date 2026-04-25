@@ -15,8 +15,8 @@ int **init_game_board(int size)
 {
     int **game_board;
 
-    if (size < 4 || size > 5)
-        return NULL;
+    // if (size < 4 || size > 5)
+    //     return NULL;
 
     game_board = ft_calloc(size, sizeof(int *));
     if (game_board == NULL)
