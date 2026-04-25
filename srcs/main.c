@@ -24,15 +24,40 @@ bool check_finish(int tab[4][4])
     return full;
 }
 
+
+void apply_board(int tab[4][4], int **game_board)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+            game_board[i][j] = tab[i][j];
+    }
+}
+
+void apply_tab(int tab[4][4], int **game_board)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+            tab[i][j] = game_board[i][j];
+    }
+}
+
+
 int main()
 {
     int ch;
+    int **game_board;
     int tab[4][4] = {
-        {1, 0, 2, 0},
-        {0, 0, 2047, 0},
+        {2, 2, 4, 2},
+        {0, 0, 2, 0},
         {0, 0, 0, 0},
-        {0, 7, 0, 0}
+        {0, 4, 0, 0}
     };
+
+    game_board = init_game_board(4);
+    apply_board(tab, game_board);
+
     initscr();
     noecho();
     curs_set(0);
@@ -47,6 +72,10 @@ int main()
             break;
         
         erase();
+
+        update_game_board(game_board, 4, ch);
+        apply_tab(tab, game_board);
+
         draw_board(tab);
         if (check_finish(tab))
         {
