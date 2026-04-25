@@ -5,13 +5,13 @@ bool is_power_of_two(int n)
     return (n > 0 && (n & (n - 1)) == 0);
 }
 
-bool check_finish(int **tab)
+bool check_finish(int **tab, t_board board)
 {
     bool full = true;
 
-    for (int i = 0; i < BOARD_SIZE; i++)
+    for (int i = 0; i < board.size; i++)
     {
-        for (int j = 0; j < BOARD_SIZE; j++)
+        for (int j = 0; j < board.size; j++)
         {
             if (tab[i][j] == WIN_VALUE && is_power_of_two(WIN_VALUE))
                 return true;
@@ -25,36 +25,11 @@ bool check_finish(int **tab)
 }
 
 
-void apply_board(int **tab, int **game_board)
-{
-    for (int i = 0; i < BOARD_SIZE; i++)
-    {
-        for (int j = 0; j < BOARD_SIZE; j++)
-            game_board[i][j] = tab[i][j];
-    }
-}
-
-// void apply_tab(int **tab, int **game_board)
-// {
-//     for (int i = 0; i < BOARD_SIZE; i++)
-//     {
-//         for (int j = 0; j < BOARD_SIZE; j++)
-//             tab[i][j] = game_board[i][j];
-//     }
-// }
-
-
 int main()
 {
     t_board board;
     int ch;
-    // int tab[4][4] = {
-    //     {1, 0, 2, 0},
-    //     {0, 0, 204, 0},
-    //     {0, 0, 0, 4},
-    //     {0, 7, 0, 8}
-    // };
-    board.size = BOARD_SIZE;
+
     initscr();
     noecho();
     start_color();
@@ -63,37 +38,37 @@ int main()
     set_escdelay(0);
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
-    // while (1)
-    // {
-    //     erase();
-    //     printw("What size of board would you want ?\n");
-    //     printw("4x4 (click 4)\n");
-    //     printw("5x5 (click 5)\n");
+    while (1)
+    {
+        erase();
+        printw("What size of board would you want ?\n");
+        printw("4x4 (click 4)\n");
+        printw("5x5 (click 5)\n");
 
-    //     refresh();
+        refresh();
 
-    //     ch = getch();
+        ch = getch();
 
-    //     if (ch == '4')
-    //         board.size = 4;
-    //     if (ch == '5')
-    //         board.size = 5;
-    //     if (ch == '4' || ch == '5')
-    //         break;
-    // }
+        if (ch == '4')
+            board.size = 4;
+        if (ch == '5')
+            board.size = 5;
+        if (ch == '4' || ch == '5')
+            break;
+    }
     int **game_board;
-    game_board = init_game_board(BOARD_SIZE);
+    game_board = init_game_board(board.size);
+    spawn_rand(game_board, board.size, 2);
     while (1)
     {
         ch = getch();
         if (ch == 27)
             break;
-        if (!check_finish(game_board))
+        if (!check_finish(game_board, board))
         {
             
             erase();
-            update_game_board(game_board, BOARD_SIZE, ch);
-            // apply_tab(tab, game_board);
+            update_game_board(game_board, board.size, ch);
             draw_board(board, game_board);
         }
         else
