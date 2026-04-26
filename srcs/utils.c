@@ -55,3 +55,21 @@ bool is_power_of_two(int n)
 {
     return (n > 0 && (n & (n - 1)) == 0);
 }
+
+int ft_intlen(int n)
+{
+    int len = 0;
+
+    if (n == 0)
+        return 1;
+
+    if (n < 0)
+        len++;
+
+    while (n != 0)
+    {
+        n /= 10;
+        len++;
+    }
+    return len;
+}

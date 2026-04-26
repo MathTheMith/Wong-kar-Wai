@@ -43,6 +43,7 @@ SRC = \
 	  game_board.c \
 	  utils.c \
 	  checks.c \
+	  ascii.c \
 	  libft/ft_calloc.c \
 	  libft/ft_bzero.c \
 
