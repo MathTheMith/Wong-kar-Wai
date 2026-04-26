@@ -55,7 +55,7 @@ int get_ascii_height(int nb)
 void draw_ascii(int y, int x, int nb)
 {
     (void)nb;
-    char *str = NULL;//strdup(get_ascii(nb));
+    char *str = strdup(get_ascii(nb));
     if (!str)
         return;
     char *line = strtok(str, "\n");
