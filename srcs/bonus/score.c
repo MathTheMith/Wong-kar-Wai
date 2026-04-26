@@ -2,13 +2,15 @@
 
 int load_score(char buffer[256])
 {
-    int fd;
+    int     fd;
+    ssize_t n;
 
     fd = open(SAVE_FILE, O_RDONLY);
     if (fd == -1)
         return (1);
-    
-    read(fd, buffer, 256);
+    n = read(fd, buffer, 255);
+    if (n >= 0)
+        buffer[n] = '\0';
     close(fd);
     return (0);
 }

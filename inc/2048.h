@@ -7,12 +7,10 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "libft.h"
+#include <signal.h>
 
 # define SAVE_FILE "save.txt"
 # define BOARD_MAX 9
-
-#include <signal.h>
-#include "libft.h"
 
 extern volatile sig_atomic_t g_signal;
 

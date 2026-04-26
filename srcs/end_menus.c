@@ -29,7 +29,8 @@ int win_menu(int score)
             standend();
 
             attron(A_DIM);
-            mvprintw(cy - 2, cx - 17, "You reached ! Congratulations!");
+            mvprintw(cy - 2, cx - 17, "You reached  !! Congratulations!");
+            mvprintw(cy - 2, cx - 5, "%d", WIN_VALUE);
             standend();
         }
         else

@@ -15,6 +15,7 @@ void init_all(void)
     use_default_colors();
     curs_set(0);
     set_escdelay(0);
+    init_pair(20, COLOR_YELLOW, -1);
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
 

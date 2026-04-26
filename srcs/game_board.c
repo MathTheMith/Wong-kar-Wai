@@ -20,7 +20,7 @@ void spawn_rand(int size, int (*game_board)[size][size], int n_rand)
         while (1)
         {
             n = randint(range);
-            while (tab[n] == 1 && n < size * size)
+            while (n < size * size && tab[n] == 1)
                 n++;
 
             if ((*game_board)[n / size][n % size] != 0)

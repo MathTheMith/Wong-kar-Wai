@@ -11,7 +11,7 @@ int main(void)
     
     board.size = show_menu();
     if (board.size < 0)
-    return clean_exit(NULL, 0);
+        return clean_exit();
     
     int game_board[board.size][board.size];
 
@@ -71,5 +71,5 @@ int main(void)
         refresh();
     }
 
-    return clean_exit(game_board, board.size);
+    return clean_exit();
 }

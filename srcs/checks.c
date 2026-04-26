@@ -16,7 +16,7 @@ int check_finish(t_board board, int (*tab)[board.size][board.size], bool continu
     {
         for (int i = 0; i < board.size; i++)
             for (int j = 0; j < board.size; j++)
-                if ((*tab)[i][j] == WIN_VALUE && is_power_of_two(WIN_VALUE))
+                if ((*tab)[i][j] == (is_power_of_two(WIN_VALUE) ? WIN_VALUE : 2048))
                     return 1;
     }
 
