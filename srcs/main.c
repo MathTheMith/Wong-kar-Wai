@@ -15,7 +15,7 @@ int main(void)
         return clean_exit(NULL, 0);
 
     game_board = start_new_game(board.size);
-
+    board.score = 0;
     while (!should_exit())
     {
         ch = getch();
@@ -27,23 +27,32 @@ int main(void)
         if (result == 0)
         {
             erase();
-            update_game_board(game_board, board.size, ch);
+            update_game_board(&board, game_board, board.size, ch);
             draw_board(board, game_board);
+            attron(A_BOLD | COLOR_PAIR(20));
+            mvprintw(0, 0, "Score: %d ", board.score);
+            standend();
         }
         else if (result == 1)
         {
-            int choice = win_menu();
-
+            int choice = win_menu(board.score);
             if (choice == 1)
+            {
+                write_score(board.score);
                 reset_game(&game_board, board.size);
+            }
             else if (choice == 2)
                 continue_game = true;
             else
+            {
+                write_score(board.score);
                 break;
+            }
         }
         else
         {
-            if (loose_menu())
+            write_score(board.score);
+            if (loose_menu(board.score))
                 reset_game(&game_board, board.size);
             else
                 break;

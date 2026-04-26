@@ -6,7 +6,7 @@
 #    By: mvachon <mvachon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/28 12:25:05 by lud-adam          #+#    #+#              #
-#    Updated: 2026/04/26 09:40:16 by mvachon          ###   ########.fr        #
+#    Updated: 2026/04/26 13:38:17 by mvachon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,9 +43,11 @@ SRC = \
 	  game_board.c \
 	  utils.c \
 	  checks.c \
+	  score.c \
 	  ascii.c \
 	  libft/ft_calloc.c \
 	  libft/ft_bzero.c \
+	  libft/ft_putnbr_fd.c \
 
 #############################################################################################
 #                                                                                           #
@@ -100,6 +102,7 @@ clean-obj:
 fclean:
 	@$(MAKE) clean-obj
 	@$(MAKE) clean-bin
+	rm -rf save.txt
 
 re:
 	@$(MAKE) fclean

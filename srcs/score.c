@@ -17,10 +17,12 @@ int write_score(int score)
 {
     int fd;
     
-    fd = open(SAVE_FILE, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    fd = open(SAVE_FILE, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (fd == -1)
         return (1);
 
     ft_putnbr_fd(score, fd);
+    write(fd, "\n", 1);
+    close(fd);
     return (0);
 }

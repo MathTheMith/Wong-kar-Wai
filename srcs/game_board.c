@@ -80,18 +80,13 @@ void spawn_rand(int **game_board, int size, int n_rand)
     }
 }
 
-int update_horizontal(int **game_board, int size, int move, int *has_moved)
+void update_horizontal(t_board *board, int **game_board, int size, int move, int *has_moved)
 {
     int j_start;
     int last_j;
-    int score;
     j_start = 1;
     if (move == -1)
         j_start = size - 2;
-
-
-    score = 0;
-
     
     for (int i = 0; i < size; i++)
     {
@@ -114,7 +109,7 @@ int update_horizontal(int **game_board, int size, int move, int *has_moved)
                 {
                     game_board[i][k] *= -2;
                     game_board[i][last_j] = 0;
-                    score += game_board[i][k];
+                    board->score -= game_board[i][k];
                     *has_moved = 1;
                     break;
                 }
@@ -124,21 +119,16 @@ int update_horizontal(int **game_board, int size, int move, int *has_moved)
             }
         }
     }
-
-    return score;
 }
 
-int update_vertical(int **game_board, int size, int move, int *has_moved)
+void update_vertical(t_board *board, int **game_board, int size, int move, int *has_moved)
 {
     int i_start;
     int last_i;
-    int score;
 
     i_start = 1;
     if (move == -1)
         i_start = size - 2;
-
-    score = 0;
     
     for (int j = 0; j < size; j++)
     {
@@ -159,7 +149,7 @@ int update_vertical(int **game_board, int size, int move, int *has_moved)
                 {
                     game_board[k][j] *= -2;
                     game_board[last_i][j] = 0;
-                    score += game_board[k][j];
+                    board->score -= game_board[k][j];
                     *has_moved = 1;
                     break;
                 }
@@ -169,12 +159,10 @@ int update_vertical(int **game_board, int size, int move, int *has_moved)
             }
         }
     }
-    return score;
 }
 
-int update_game_board(int **game_board, int size, int ch)
+void update_game_board(t_board *board, int **game_board, int size, int ch)
 {
-    int score;
     int has_moved;
 
     has_moved = 0;
@@ -182,62 +170,28 @@ int update_game_board(int **game_board, int size, int ch)
     switch (ch)
     {
         case KEY_LEFT:
-            score = update_horizontal(game_board, size, 1, &has_moved);
+            update_horizontal(board, game_board, size, 1, &has_moved);
             break;
 
         case KEY_RIGHT:
-            score = update_horizontal(game_board, size, -1, &has_moved);
+            update_horizontal(board, game_board, size, -1, &has_moved);
             break;
 
         case KEY_UP:
-            score =update_vertical(game_board, size, 1, &has_moved);
+            update_vertical(board, game_board, size, 1, &has_moved);
             break;
 
         case KEY_DOWN:
-            score = update_vertical(game_board, size, -1, &has_moved);
+            update_vertical(board, game_board, size, -1, &has_moved);
             break;
 
         default:
-            return 0;
+            return ;
     }
-    
     if (has_moved)
         spawn_rand(game_board, size, 1);
-}
-
-void update_game_board(int **game_board, int size, int ch)
-{
-    if (ch == KEY_LEFT)
-    {
-        update_horizontal(game_board, size, 1);
-        spawn_rand(game_board, size, 1);
-    }
-
-    else if (ch == KEY_RIGHT)
-    {
-        update_horizontal(game_board, size, -1);
-        spawn_rand(game_board, size, 1);
-    }
-
-    else if (ch == KEY_UP)
-    {
-        update_vertical(game_board, size, 1);
-        spawn_rand(game_board, size, 1);
-    }
-
-    else if (ch == KEY_DOWN)
-    {
-        update_vertical(game_board, size, -1);
-        spawn_rand(game_board, size, 1);
-    }
-
     for (int i = 0; i < size; i++)
-    {
         for (int j = 0; j < size; j++)
-        {
             if (game_board[i][j] < 0)
                 game_board[i][j] *= -1;
-        }
-    }
-    return score;
 }

@@ -75,7 +75,7 @@ int show_menu(void)
     return -1;
 }
 
-int win_menu(void)
+int win_menu(int score)
 {
     int ch, h, w, cx, cy, bx, by;
 
@@ -117,17 +117,20 @@ int win_menu(void)
             mvprintw(by + 1, bx, "|                                |");
             mvprintw(by + 2, bx, "|   You win!                     |");
             mvprintw(by + 3, bx, "|                                |");
-            mvprintw(by + 4, bx, "|   Press  R      to play again  |");
-            mvprintw(by + 5, bx, "|   Press  C      to continue    |");
-            mvprintw(by + 6, bx, "|   Press  ESC    to quit        |");
-            mvprintw(by + 7, bx, "|                                |");
-            mvprintw(by + 8, bx, "+--------------------------------+");
+            mvprintw(by + 4, bx, "|   Score:                       |");
+            mvprintw(by + 5, bx, "|                                |");
+            mvprintw(by + 6, bx, "|   Press  R      to play again  |");
+            mvprintw(by + 7, bx, "|   Press  C      to continue    |");
+            mvprintw(by + 8, bx, "|   Press  ESC    to quit        |");
+            mvprintw(by + 9, bx, "|                                |");
+            mvprintw(by + 10, bx, "+--------------------------------+");
             standend();
 
             attron(A_BOLD | COLOR_PAIR(20));
-            mvprintw(by + 4, bx + 11, "R");
-            mvprintw(by + 5, bx + 11, "C");
-            mvprintw(by + 6, bx + 11, "ESC");
+            mvprintw(by + 4, bx + 11, "%d", score);
+            mvprintw(by + 6, bx + 11, "R");
+            mvprintw(by + 7, bx + 11, "C");
+            mvprintw(by + 8, bx + 11, "ESC");
             standend();
         }
         else
@@ -159,7 +162,7 @@ int win_menu(void)
     return -1;
 }
 
-int loose_menu(void)
+int loose_menu(int score)
 {
     int ch, h, w, cx, cy, bx, by;
 
@@ -201,15 +204,20 @@ int loose_menu(void)
             mvprintw(by + 1, bx, "|                                |");
             mvprintw(by + 2, bx, "|   Game over...                 |");
             mvprintw(by + 3, bx, "|                                |");
-            mvprintw(by + 4, bx, "|   Press  R      to play again  |");
-            mvprintw(by + 5, bx, "|   Press  ESC    to quit        |");
-            mvprintw(by + 6, bx, "|                                |");
-            mvprintw(by + 7, bx, "+--------------------------------+");
+            mvprintw(by + 4, bx, "|   Score:                       |");
+            mvprintw(by + 5, bx, "|                                |");
+            mvprintw(by + 6, bx, "|   Press  R      to play again  |");
+            mvprintw(by + 7, bx, "|   Press  ESC    to quit        |");
+            mvprintw(by + 8, bx, "|                                |");
+            mvprintw(by + 9, bx, "+--------------------------------+");
             standend();
 
+            attron(A_BOLD | COLOR_PAIR(20));
+            mvprintw(by + 4, bx + 11, "%d", score);
+            standend();
             attron(A_BOLD | COLOR_PAIR(23));
-            mvprintw(by + 4, bx + 11, "R");
-            mvprintw(by + 5, bx + 11, "ESC");
+            mvprintw(by + 6, bx + 11, "R");
+            mvprintw(by + 7, bx + 11, "ESC");
             standend();
         }
         else
