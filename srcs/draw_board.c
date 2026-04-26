@@ -65,8 +65,24 @@ void draw_board(t_board board, int (*tab)[board.size][board.size])
     int h, w;
     getmaxyx(stdscr, h, w);
 
-    board.tiles_w = (w - 2) / board.size;
-    board.tiles_h = (h + 2) / board.size;
+    int max_tw = (w - 1) / board.size;
+    int max_th = (h - 1) / board.size + 1;
+
+    int tiles_h = max_th;
+    int tiles_w = 2 * (tiles_h - 1);
+
+    if (tiles_w > max_tw)
+    {
+        tiles_w = max_tw;
+        tiles_h = tiles_w / 2 + 1;
+    }
+
+    if (tiles_h < 3) return ;
+    if (tiles_w < 3) return ;
+
+    board.tiles_w = tiles_w;
+    board.tiles_h = tiles_h;
+
     for (int i = 0; i < board.size; i++)
     {
         draw_separation(board);
@@ -77,6 +93,7 @@ void draw_board(t_board board, int (*tab)[board.size][board.size])
     put_colors(board, tab);
     put_numbers(board, tab);
 }
+
 
 void set_color(int nb)
 {
