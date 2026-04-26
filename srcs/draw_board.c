@@ -93,7 +93,6 @@ void set_color(int nb)
         initialized = 1;
     }
 
-    // ----- SWITCH -----
     switch (nb)
     {
         case 2:    attron(COLOR_PAIR(1)); break;
