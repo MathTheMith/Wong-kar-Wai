@@ -3,26 +3,34 @@
 
 void set_color(int nb);
 
-void draw_separation(t_board board)
+void draw_separation(t_board board, t_sep_pos pos)
 {
+    chtype left, mid, right;
+
+    if (pos == SEP_TOP)        { left = ACS_ULCORNER; mid = ACS_TTEE; right = ACS_URCORNER; }
+    else if (pos == SEP_BOT)   { left = ACS_LLCORNER; mid = ACS_BTEE; right = ACS_LRCORNER; }
+    else                       { left = ACS_LTEE;     mid = ACS_PLUS; right = ACS_RTEE;     }
+
     for (int i = 0; i < board.size; i++)
     {
-        printw("+");
+        addch(i == 0 ? left : mid);
         for (int j = 0; j < board.tiles_w - 1; j++)
-            printw("-");
+            addch(ACS_HLINE);
     }
-    printw("+\n");
+    addch(right);
+    addch('\n');
 }
 
 void draw_line(t_board board)
 {
     for (int i = 0; i < board.size; i++)
     {
-        printw("|");
+        addch(ACS_VLINE);
         for (int j = 0; j < board.tiles_w - 1; j++)
-            printw(" ");
+            addch(' ');
     }
-    printw("|\n");
+    addch(ACS_VLINE);
+    addch('\n');
 }
 
 void put_colors(t_board board, int (*tab)[board.size][board.size])
@@ -80,7 +88,7 @@ void draw_board(t_board board, int (*tab)[board.size][board.size])
     int h, w;
     getmaxyx(stdscr, h, w);
 
-    int max_tw = (w - 1) / board.size;
+    int max_tw = (w - 2) / board.size;
     int max_th = (h - 1) / board.size + 1;
 
     int tiles_h = max_th;
@@ -100,11 +108,11 @@ void draw_board(t_board board, int (*tab)[board.size][board.size])
 
     for (int i = 0; i < board.size; i++)
     {
-        draw_separation(board);
+        draw_separation(board, i == 0 ? SEP_TOP : SEP_MID);
         for (int j = 0; j < board.tiles_h - 2; j++)
             draw_line(board);
     }
-    draw_separation(board);
+    draw_separation(board, SEP_BOT);
     put_colors(board, tab);
     put_numbers(board, tab, h, w);
 }

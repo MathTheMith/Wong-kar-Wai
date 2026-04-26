@@ -29,6 +29,8 @@ typedef struct board
     int old_tilies_h;
 } t_board;
 
+typedef enum { SEP_TOP, SEP_MID, SEP_BOT } t_sep_pos;
+
 void draw_board(t_board board, int (*tab)[board.size][board.size]);
 void spawn_rand(int size, int (*game_board)[size][size], int n_rand);
 void update_game_board(t_board *board, int (*game_board)[board->size][board->size], int ch);
