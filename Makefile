@@ -6,16 +6,17 @@
 #    By: mvachon <mvachon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/28 12:25:05 by lud-adam          #+#    #+#              #
-#    Updated: 2026/04/26 13:38:17 by mvachon          ###   ########.fr        #
+#    Updated: 2026/04/26 14:23:05 by mvachon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY : all fclean re bonus clean-bin clean-obj
+.PHONY : all bonus fclean re clean-bin clean-obj
 CC = cc
 CFLAGS = -Wextra -Wall -Werror -MMD -MP -Ofast -g3
 NO_DIR = --no-print-directory
 MAKE := $(MAKE) -j $(NO_DIR)
 NAME = 2048
+NAME_BONUS = 2048_bonus
 LDLIBS = -lncurses
 CFLAGS_DEBUG = -Wall -Wextra -g3 -D DEBUG=1
 CC_DEBUG = clang
@@ -38,13 +39,24 @@ P_OBJ = .obj/
 
 SRC = \
 	  main.c \
-	  menus.c \
 	  draw_board.c \
+	  end_menus.c \
 	  game_board.c \
 	  utils.c \
 	  checks.c \
-	  score.c \
-	  ascii.c \
+	  libft/ft_calloc.c \
+	  libft/ft_bzero.c \
+
+SRC_BONUS = \
+	  bonus/main_bonus.c \
+	  bonus/draw_board_bonus.c \
+	  bonus/menus.c \
+	  bonus/ascii.c \
+	  bonus/score.c \
+	  end_menus.c \
+	  game_board.c \
+	  utils.c \
+	  checks.c \
 	  libft/ft_calloc.c \
 	  libft/ft_bzero.c \
 	  libft/ft_putnbr_fd.c \
@@ -57,12 +69,19 @@ SRC = \
 SRCS = \
 	$(addprefix $(P_SRC), $(SRC)) \
 
-OBJS =  \
+SRCS_BONUS = \
+	$(addprefix $(P_SRC), $(SRC_BONUS)) \
+
+OBJS = \
 	$(subst $(P_SRC), $(P_OBJ), $(SRCS:.c=.o)) \
+
+OBJS_BONUS = \
+	$(subst $(P_SRC), $(P_OBJ), $(SRCS_BONUS:.c=.o)) \
 
 P_OBJS = $(subst $(P_SRC), $(P_OBJ), $(SRCS))
 
 DEPS = $(OBJS:%.o=%.d)
+DEPS_BONUS = $(OBJS_BONUS:%.o=%.d)
 
 #############################################################################################
 #                                                                                           #
@@ -83,6 +102,11 @@ $(P_OBJ)%.o: $(P_SRC)%.c
 	echo "$(Cyan)Compiling $<$(Color_Off)" || \
 	echo "$(Red)Error compiling $<$(Color_Off)"
 
+bonus: $(OBJS_BONUS)
+	@$(CC) $(CFLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) $(LDLIBS) && \
+	echo "$(Green)Creating bonus executable $(NAME_BONUS)$(Color_Off)" || \
+	echo "$(Red)Error creating $(NAME_BONUS)$(Color_Off)"
+
 #############################################################################################
 #                                                                                           #
 #                                      Other RULES                                          #
@@ -94,7 +118,7 @@ clean:
 	rm -rfd $(DEPS)
 
 clean-bin:
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_BONUS)
 
 clean-obj:
 	@$(MAKE) clean
@@ -148,4 +172,5 @@ On_Purple=\033[45m
 On_Cyan=\033[46m
 On_White=\033[47m
 
--include $(DEPS)% 
+-include $(DEPS)
+-include $(DEPS_BONUS)

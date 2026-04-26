@@ -1,4 +1,5 @@
 #include "2048.h"
+#include <string.h>
 
 void set_color(int nb);
 
@@ -42,19 +43,33 @@ void put_colors(int **tab, t_board board)
     }
 }
 
-void put_numbers(int **tab, t_board board)
+void put_numbers(int **tab, t_board board, int h, int w)
 {
     for (int i = 0; i < board.size; i++)
     {
         for (int j = 0; j < board.size; j++)
         {
-            int y = (i * board.tiles_h + board.tiles_h / 2) - i;
-            int x = (j * board.tiles_w + board.tiles_w / 2) - (ft_intlen(tab[i][j]) / 2);
-            if (tab[i][j] != 0)
+            if (h >= 150 && w >= 800)
             {
-                set_color(tab[i][j]);
-                mvprintw(y, x, "%d", tab[i][j]);
-                standend();
+                int y = (i * board.tiles_h + board.tiles_h / 2) - i - (get_ascii_height(tab[i][j] % 10) / 2);
+                int x = (j * board.tiles_w + board.tiles_w / 2) - (get_ascii_number_width(tab[i][j]) / 2);
+                if (tab[i][j] != 0)
+                {
+                    set_color(tab[i][j]);
+                    draw_ascii_number(y, x, tab[i][j]);
+                    standend();
+                }
+            }
+            else
+            {
+                int y = (i * board.tiles_h + board.tiles_h / 2) - i;
+                int x = (j * board.tiles_w + board.tiles_w / 2) - (ft_intlen(tab[i][j]) / 2);
+                if (tab[i][j] != 0)
+                {
+                    set_color(tab[i][j]);
+                    mvprintw(y, x, "%d", tab[i][j]);
+                    standend();
+                }
             }
         }
     }
@@ -75,7 +90,7 @@ void draw_board(t_board board, int **tab)
     }
     draw_separation(board);
     put_colors(tab, board);
-    put_numbers(tab, board);
+    put_numbers(tab, board, h, w);
 }
 
 void set_color(int nb)
