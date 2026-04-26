@@ -1,6 +1,5 @@
 #include "2048.h"
 
-
 int show_menu(void)
 {
     int ch, h, w, cx, cy, bx, by;
