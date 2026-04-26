@@ -100,7 +100,7 @@ void update_vertical(t_board *board, int (*game_board)[board->size][board->size]
         {
             last_i = i;
 
-            for (int k = i - move; (*game_board)[last_i][j] != 0 && 0 <= k && k < board->size; k -= move)
+            for (int k = i - move; (*game_board)[last_i][j] >= 0 && 0 <= k && k < board->size; k -= move)
             {
                 if ((*game_board)[k][j] == 0)
                 {
