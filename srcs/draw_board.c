@@ -1,22 +1,7 @@
 #include "2048.h"
+#include <string.h>
 
-int ft_intlen(int n)
-{
-    int len = 0;
-
-    if (n == 0)
-        return 1;
-
-    if (n < 0)
-        len++;
-
-    while (n != 0)
-    {
-        n /= 10;
-        len++;
-    }
-    return len;
-}
+void set_color(int nb);
 
 void draw_separation(t_board board)
 {
@@ -39,6 +24,80 @@ void draw_line(t_board board)
     }
     printw("|\n");
 }
+
+void put_colors(int **tab, t_board board)
+{
+
+    for (int i = 0; i < board.size; i++)
+    {
+        for (int j = 0; j < board.size; j++)
+        {
+            int y = j * (board.tiles_h - 1);
+            int x = i * (board.tiles_w);
+
+            set_color(tab[j][i]);
+
+            for (int k = 1; k < board.tiles_h - 1; k++)
+            {
+                for (int l = 1; l < board.tiles_w; l++)
+                {
+                    mvprintw(y + k, x + l, " ");
+                }
+            }
+            standend();
+        }
+    }
+}
+
+void put_numbers(int **tab, t_board board, int h, int w)
+{
+    for (int i = 0; i < board.size; i++)
+    {
+        for (int j = 0; j < board.size; j++)
+        {
+            if (h >= 150 && w >= 800)
+            {
+                int y = (i * board.tiles_h + board.tiles_h / 2) - i - (get_ascii_height(tab[i][j] % 10) / 2);
+                int x = (j * board.tiles_w + board.tiles_w / 2) - (get_ascii_number_width(tab[i][j]) / 2);
+                if (tab[i][j] != 0)
+                {
+                    set_color(tab[i][j]);
+                    draw_ascii_number(y, x, tab[i][j]);
+                    standend();
+                }
+            }
+            else
+            {
+                int y = (i * board.tiles_h + board.tiles_h / 2) - i;
+                int x = (j * board.tiles_w + board.tiles_w / 2) - (ft_intlen(tab[i][j]) / 2);
+                if (tab[i][j] != 0)
+                {
+                    set_color(tab[i][j]);
+                    mvprintw(y, x, "%d", tab[i][j]);
+                    standend();
+                }
+            }
+        }
+    }
+}
+void draw_board(t_board board, int **tab)
+{
+    int h, w;
+    getmaxyx(stdscr, h, w);
+
+    board.tiles_w = (w - 2) / board.size;
+    board.tiles_h = (h + 2) / board.size;
+    for (int i = 0; i < board.size; i++)
+    {
+        draw_separation(board);
+        for(int j = 0; j < board.tiles_h - 2; j++)
+            draw_line(board);
+    }
+    draw_separation(board);
+    put_colors(tab, board);
+    put_numbers(tab, board, h , w);
+}
+
 
 void set_color(int nb)
 {
@@ -108,60 +167,4 @@ void set_color(int nb)
         case 2048: attron(COLOR_PAIR(11)); break;
         default:   attron(COLOR_PAIR(0)); break;
     }
-}
-
-void put_numbers(int **tab, t_board board)
-{
-
-    for (int i = 0; i < board.size; i++)
-    {
-        for (int j = 0; j < board.size; j++)
-        {
-            int y = j * (board.tiles_h - 1);
-            int x = i * (board.tiles_w);
-
-            set_color(tab[j][i]);
-
-            for (int k = 1; k < board.tiles_h - 1; k++)
-            {
-                for (int l = 1; l < board.tiles_w; l++)
-                {
-                    mvprintw(y + k, x + l, " ");
-                }
-            }
-            standend();
-        }
-    }
-    for (int i = 0; i < board.size; i++)
-    {
-        for (int j = 0; j < board.size; j++)
-        {
-            int y = (i * board.tiles_h + board.tiles_h / 2) - i;
-            int x = (j * board.tiles_w + board.tiles_w / 2) - (ft_intlen(tab[i][j]) / 2);
-            if (tab[i][j] != 0)
-            {
-                set_color(tab[i][j]);
-                mvprintw(y, x, "%d", tab[i][j]);
-                standend();
-            }
-        }
-    }
-}
-
-void draw_board(t_board board, int **tab)
-{
-    int h, w;
-    getmaxyx(stdscr, h, w);
-
-    board.tiles_w = (w - 2) / board.size;
-    board.tiles_h = (h + 2) / board.size;
-    for (int i = 0; i < board.size; i++)
-    {
-        draw_separation(board);
-        for(int j = 0; j < board.tiles_h - 2; j++)
-            draw_line(board);
-    }
-    draw_separation(board);
-    put_numbers(tab, board);
-    
 }

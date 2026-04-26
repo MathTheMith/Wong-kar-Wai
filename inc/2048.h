@@ -11,7 +11,7 @@ extern volatile sig_atomic_t g_signal;
 
 enum e_const
 {
-    WIN_VALUE = 16
+    WIN_VALUE = 2048
 };
 
 typedef struct board
@@ -38,6 +38,13 @@ int should_exit(void);
 int clean_exit(int **board, int size);
 int check_finish(int **tab, t_board board, bool continue_game);
 bool is_power_of_two(int n);
+char *get_ascii(int nb);
+int   get_ascii_width(int nb);
+int   get_ascii_height(int nb);
+void  draw_ascii(int y, int x, int nb);
+int   get_ascii_number_width(int nb);
+void  draw_ascii_number(int y, int x, int nb);
+int ft_intlen(int n);
 
 
 #endif
