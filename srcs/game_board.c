@@ -85,12 +85,13 @@ int update_horizontal(int **game_board, int size, int move, int *has_moved)
     int j_start;
     int last_j;
     int score;
-
     j_start = 1;
     if (move == -1)
         j_start = size - 2;
 
+
     score = 0;
+
     
     for (int i = 0; i < size; i++)
     {
@@ -105,8 +106,8 @@ int update_horizontal(int **game_board, int size, int move, int *has_moved)
                     game_board[i][k] = game_board[i][last_j];
                     game_board[i][last_j] = 0;
                     last_j = k;
-                    *has_moved = 1;
 
+                    *has_moved = 1;
                 }
 
                 else if (game_board[i][k] == game_board[i][last_j])
@@ -123,6 +124,7 @@ int update_horizontal(int **game_board, int size, int move, int *has_moved)
             }
         }
     }
+
     return score;
 }
 
@@ -153,7 +155,6 @@ int update_vertical(int **game_board, int size, int move, int *has_moved)
                     last_i = k;
                     *has_moved = 1;
                 }
-
                 else if (game_board[k][j] == game_board[last_i][j])
                 {
                     game_board[k][j] *= -2;
@@ -202,6 +203,33 @@ int update_game_board(int **game_board, int size, int ch)
     
     if (has_moved)
         spawn_rand(game_board, size, 1);
+}
+
+void update_game_board(int **game_board, int size, int ch)
+{
+    if (ch == KEY_LEFT)
+    {
+        update_horizontal(game_board, size, 1);
+        spawn_rand(game_board, size, 1);
+    }
+
+    else if (ch == KEY_RIGHT)
+    {
+        update_horizontal(game_board, size, -1);
+        spawn_rand(game_board, size, 1);
+    }
+
+    else if (ch == KEY_UP)
+    {
+        update_vertical(game_board, size, 1);
+        spawn_rand(game_board, size, 1);
+    }
+
+    else if (ch == KEY_DOWN)
+    {
+        update_vertical(game_board, size, -1);
+        spawn_rand(game_board, size, 1);
+    }
 
     for (int i = 0; i < size; i++)
     {
@@ -211,6 +239,5 @@ int update_game_board(int **game_board, int size, int ch)
                 game_board[i][j] *= -1;
         }
     }
-
     return score;
 }

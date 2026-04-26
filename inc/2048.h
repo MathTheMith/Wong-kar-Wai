@@ -9,6 +9,7 @@
 #include "libft.h"
 
 # define SAVE_FILE "save.txt"
+
 #include <signal.h>
 #include "libft.h"
 
@@ -32,6 +33,7 @@ void draw_board(t_board board, int **tab);
 int **init_game_board(int size);
 void free_board(int **game_board, int size);
 int update_game_board(int **game_board, int size, int ch);
+void update_game_board(int **game_board, int size, int ch);
 void spawn_rand(int **game_board, int size, int n_rand);
 int  show_menu(void);
 int  win_menu(void);
@@ -50,8 +52,6 @@ void  draw_ascii(int y, int x, int nb);
 int   get_ascii_number_width(int nb);
 void  draw_ascii_number(int y, int x, int nb);
 int ft_intlen(int n);
-
-
 int load_score(char buffer[256]);
 int write_score(int score);
 
