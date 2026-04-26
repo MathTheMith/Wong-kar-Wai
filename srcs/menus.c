@@ -1,5 +1,6 @@
 #include "2048.h"
 
+
 int show_menu(void)
 {
     int ch, h, w, cx, cy, bx, by;
@@ -9,8 +10,11 @@ int show_menu(void)
     init_pair(23, COLOR_CYAN,   -1);
 
     nodelay(stdscr, FALSE);
-    while (1)
+    flushinp();
+    while (g_signal == 0)
     {
+        if(g_signal)
+            return -1;
         erase();
         getmaxyx(stdscr, h, w);
         cx = w / 2;
@@ -71,6 +75,7 @@ int show_menu(void)
             return ch - '0';
         }
     }
+    return -1;
 }
 
 int win_menu(void)
@@ -81,8 +86,11 @@ int win_menu(void)
     init_pair(22, COLOR_GREEN,  -1);
 
     nodelay(stdscr, FALSE);
-    while (1)
+    flushinp();
+    while (g_signal == 0)
     {
+        if(g_signal)
+            return -1;
         erase();
         getmaxyx(stdscr, h, w);
         cx = w / 2;
@@ -101,7 +109,7 @@ int win_menu(void)
             standend();
 
             attron(A_DIM);
-            mvprintw(cy - 2, cx - 17, "You reached 2048! Congratulations!");
+            mvprintw(cy - 2, cx - 17, "You reached ! Congratulations!");
             standend();
         }
         else
@@ -115,14 +123,16 @@ int win_menu(void)
             mvprintw(by + 2, bx, "|   You win!                     |");
             mvprintw(by + 3, bx, "|                                |");
             mvprintw(by + 4, bx, "|   Press  R      to play again  |");
-            mvprintw(by + 5, bx, "|   Press  ESC    to quit        |");
-            mvprintw(by + 6, bx, "|                                |");
-            mvprintw(by + 7, bx, "+--------------------------------+");
+            mvprintw(by + 5, bx, "|   Press  C      to continue    |");
+            mvprintw(by + 6, bx, "|   Press  ESC    to quit        |");
+            mvprintw(by + 7, bx, "|                                |");
+            mvprintw(by + 8, bx, "+--------------------------------+");
             standend();
 
             attron(A_BOLD | COLOR_PAIR(20));
             mvprintw(by + 4, bx + 11, "R");
-            mvprintw(by + 5, bx + 11, "ESC");
+            mvprintw(by + 5, bx + 11, "C");
+            mvprintw(by + 6, bx + 11, "ESC");
             standend();
         }
         else
@@ -140,12 +150,18 @@ int win_menu(void)
             nodelay(stdscr, TRUE);
             return 0;
         }
-        if (ch == 'r' || ch == 'R')
+        else if (ch == 'c' || ch == 'C')
+        {
+            nodelay(stdscr, TRUE);
+            return 2;
+        }
+        else if (ch == 'r' || ch == 'R')
         {
             nodelay(stdscr, TRUE);
             return 1;
         }
     }
+    return -1;
 }
 
 int loose_menu(void)
@@ -156,8 +172,11 @@ int loose_menu(void)
     init_pair(23, COLOR_CYAN, -1);
 
     nodelay(stdscr, FALSE);
-    while (1)
+    flushinp();
+    while (g_signal == 0)
     {
+        if(g_signal)
+            return -1;
         erase();
         getmaxyx(stdscr, h, w);
         cx = w / 2;
@@ -221,4 +240,5 @@ int loose_menu(void)
             return 1;
         }
     }
+    return -1;
 }

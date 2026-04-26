@@ -6,7 +6,7 @@
 #    By: mvachon <mvachon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/28 12:25:05 by lud-adam          #+#    #+#              #
-#    Updated: 2026/04/25 11:20:42 by mvachon          ###   ########.fr        #
+#    Updated: 2026/04/26 09:40:16 by mvachon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,8 @@ SRC = \
 	  menus.c \
 	  draw_board.c \
 	  game_board.c \
+	  utils.c \
+	  checks.c \
 	  libft/ft_calloc.c \
 	  libft/ft_bzero.c \
 
