@@ -20,7 +20,10 @@ int main(void)
     {
         ch = getch();
         if (ch == 27)
+        {
+            write_score(board.score);
             break;
+        }
 
         result = check_finish(game_board, board, continue_game);
 

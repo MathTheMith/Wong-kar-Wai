@@ -17,7 +17,7 @@ extern volatile sig_atomic_t g_signal;
 
 enum e_const
 {
-    WIN_VALUE = 16
+    WIN_VALUE = 2048
 };
 
 typedef struct board
