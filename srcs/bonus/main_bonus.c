@@ -65,7 +65,7 @@ int main(void)
         else
         {
             write_score(board.score);
-            if (loose_menu(board.score))
+            if (loose_menu(board.score) == 1)
             {
                 board.score = 0;
                 start_new_game(board.size, &game_board);

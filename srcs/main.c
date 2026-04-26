@@ -53,7 +53,7 @@ int main(void)
         }
         else
         {
-            if (loose_menu(board.score))
+            if (loose_menu(board.score) == 1)
             {
                 board.score = 0;
                 start_new_game(board.size, &game_board);

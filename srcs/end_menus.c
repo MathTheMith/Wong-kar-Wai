@@ -168,5 +168,5 @@ int loose_menu(int score)
             return 1;
         }
     }
-    return -1;
+    return 0;
 }
