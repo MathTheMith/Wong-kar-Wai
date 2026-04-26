@@ -9,12 +9,10 @@ int show_menu(void)
     init_pair(21, COLOR_RED,    -1);
     init_pair(23, COLOR_CYAN,   -1);
 
-    nodelay(stdscr, FALSE);
+    wtimeout(stdscr, 100);
     flushinp();
     while (g_signal == 0)
     {
-        if(g_signal)
-            return -1;
         erase();
         getmaxyx(stdscr, h, w);
         cx = w / 2;
@@ -66,12 +64,12 @@ int show_menu(void)
         ch = getch();
         if (ch == 27)
         {
-            nodelay(stdscr, TRUE);
+            wtimeout(stdscr, 0);
             return -1;
         }
         if (ch >= '2' && ch <= '9')
         {
-            nodelay(stdscr, TRUE);
+            wtimeout(stdscr, 0);
             return ch - '0';
         }
     }
@@ -85,12 +83,10 @@ int win_menu(void)
     init_pair(20, COLOR_YELLOW, -1);
     init_pair(22, COLOR_GREEN,  -1);
 
-    nodelay(stdscr, FALSE);
+    wtimeout(stdscr, 100);
     flushinp();
     while (g_signal == 0)
     {
-        if(g_signal)
-            return -1;
         erase();
         getmaxyx(stdscr, h, w);
         cx = w / 2;
@@ -147,17 +143,17 @@ int win_menu(void)
         ch = getch();
         if (ch == 27)
         {
-            nodelay(stdscr, TRUE);
+            wtimeout(stdscr, 0);
             return 0;
         }
         else if (ch == 'c' || ch == 'C')
         {
-            nodelay(stdscr, TRUE);
+            wtimeout(stdscr, 0);
             return 2;
         }
         else if (ch == 'r' || ch == 'R')
         {
-            nodelay(stdscr, TRUE);
+            wtimeout(stdscr, 0);
             return 1;
         }
     }
@@ -171,12 +167,10 @@ int loose_menu(void)
     init_pair(21, COLOR_RED,  -1);
     init_pair(23, COLOR_CYAN, -1);
 
-    nodelay(stdscr, FALSE);
+    wtimeout(stdscr, 100);
     flushinp();
     while (g_signal == 0)
     {
-        if(g_signal)
-            return -1;
         erase();
         getmaxyx(stdscr, h, w);
         cx = w / 2;
@@ -231,12 +225,12 @@ int loose_menu(void)
         ch = getch();
         if (ch == 27)
         {
-            nodelay(stdscr, TRUE);
+            wtimeout(stdscr, 0);
             return 0;
         }
         if (ch == 'r' || ch == 'R')
         {
-            nodelay(stdscr, TRUE);
+            wtimeout(stdscr, 0);
             return 1;
         }
     }

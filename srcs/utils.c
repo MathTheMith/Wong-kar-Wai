@@ -1,5 +1,4 @@
 #include "2048.h"
-#include <signal.h>
 
 volatile __sig_atomic_t g_signal = 0;
 
@@ -19,12 +18,8 @@ void init_all(void)
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
 
-    struct sigaction sa = {0};
-    sa.sa_handler = handler;
-    sigemptyset(&sa.sa_mask);
-
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGTERM, &sa, NULL);
+    signal(SIGINT, handler);
+    signal(SIGTERM, handler);
 
     srand(time(NULL));
 }
