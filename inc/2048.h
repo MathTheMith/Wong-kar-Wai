@@ -9,6 +9,7 @@
 #include "libft.h"
 
 # define SAVE_FILE "save.txt"
+# define BOARD_MAX 9
 
 #include <signal.h>
 #include "libft.h"
@@ -30,20 +31,21 @@ typedef struct board
     int old_tilies_h;
 } t_board;
 
-void draw_board(t_board board, int **tab);
-int **init_game_board(int size);
-void free_board(int **game_board, int size);
-void update_game_board(t_board *board, int **game_board, int size, int ch);
-void spawn_rand(int **game_board, int size, int n_rand);
+void draw_board(t_board board, int (*tab)[board.size][board.size]);
+void spawn_rand(int size, int (*game_board)[size][size], int n_rand);
+void update_game_board(t_board *board, int (*game_board)[board->size][board->size], int ch);
 int  show_menu(void);
 int  win_menu(int score);
 int  loose_menu(int score);
 void init_all(void);
-int **start_new_game(int size);
-void reset_game(int ***board, int size);
+
+void start_new_game(int size, int (*game_board)[size][size]);
+
 int should_exit(void);
-int clean_exit(int **board, int size);
-int check_finish(int **tab, t_board board, bool continue_game);
+
+int clean_exit();
+int check_finish(t_board board, int (*tab)[board.size][board.size], bool continue_game);
+
 bool is_power_of_two(int n);
 char *get_ascii(int nb);
 int   get_ascii_width(int nb);

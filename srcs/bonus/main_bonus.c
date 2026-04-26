@@ -3,20 +3,19 @@
 int main(void)
 {
     t_board board;
-    int **game_board;
     int ch;
     int result;
     bool continue_game = false;
-
+    
     init_all();
-
+    
     board.size = show_menu();
     if (board.size < 0)
-        return clean_exit(NULL, 0);
+    return clean_exit(NULL, 0);
+    
+    int game_board[board.size][board.size];
 
-    game_board = start_new_game(board.size);
-    if (!game_board)
-        return clean_exit(NULL, 0);
+    start_new_game(board.size, &game_board);
     board.score = 0;
 
     while (!should_exit())
@@ -28,13 +27,13 @@ int main(void)
             break;
         }
 
-        result = check_finish(game_board, board, continue_game);
+        result = check_finish(board, &game_board, continue_game);
 
         if (result == 0)
         {
             erase();
-            update_game_board(&board, game_board, board.size, ch);
-            draw_board(board, game_board);
+            update_game_board(&board, &game_board, ch);
+            draw_board(board, &game_board);
             attron(A_BOLD | COLOR_PAIR(20));
             mvprintw(0, 0, "Score: %d ", board.score);
             standend();
@@ -47,7 +46,7 @@ int main(void)
                 write_score(board.score);
                 board.score = 0;
                 continue_game = false;
-                reset_game(&game_board, board.size);
+                start_new_game(board.size, &game_board);
             }
             else if (choice == 2)
                 continue_game = true;
@@ -63,7 +62,7 @@ int main(void)
             if (loose_menu(board.score))
             {
                 board.score = 0;
-                reset_game(&game_board, board.size);
+                start_new_game(board.size, &game_board);
             }
             else
                 break;

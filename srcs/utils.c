@@ -24,18 +24,17 @@ void init_all(void)
     srand(time(NULL));
 }
 
-int **start_new_game(int size)
+void start_new_game(int size, int (*game_board)[size][size])
 {
-    int **board = init_game_board(size);
-    spawn_rand(board, size, 2);
-    draw_board((t_board){.size = size}, board);
-    return board;
-}
-
-void reset_game(int ***board, int size)
-{
-    free_board(*board, size);
-    *board = start_new_game(size);
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            (*game_board)[i][j] = 0;
+        }
+    }
+    spawn_rand(size, game_board, 2);
+    draw_board((t_board){.size = size}, game_board);
 }
 
 int should_exit(void)
@@ -43,10 +42,8 @@ int should_exit(void)
     return (g_signal != 0);
 }
 
-int clean_exit(int **board, int size)
+int clean_exit()
 {
-    if (board)
-        free_board(board, size);
     endwin();
     return 0;
 }

@@ -25,7 +25,7 @@ void draw_line(t_board board)
     printw("|\n");
 }
 
-void put_colors(int **tab, t_board board)
+void put_colors(t_board board, int (*tab)[board.size][board.size])
 {
     for (int i = 0; i < board.size; i++)
     {
@@ -34,7 +34,7 @@ void put_colors(int **tab, t_board board)
             int y = j * (board.tiles_h - 1);
             int x = i * (board.tiles_w);
 
-            set_color(tab[j][i]);
+            set_color((*tab)[j][i]);
             for (int k = 1; k < board.tiles_h - 1; k++)
                 for (int l = 1; l < board.tiles_w; l++)
                     mvprintw(y + k, x + l, " ");
@@ -43,7 +43,7 @@ void put_colors(int **tab, t_board board)
     }
 }
 
-void put_numbers(int **tab, t_board board, int h, int w)
+void put_numbers(t_board board, int (*tab)[board.size][board.size], int h, int w)
 {
     for (int i = 0; i < board.size; i++)
     {
@@ -51,23 +51,23 @@ void put_numbers(int **tab, t_board board, int h, int w)
         {
             if (h >= 150 && w >= 800)
             {
-                int y = (i * board.tiles_h + board.tiles_h / 2) - i - (get_ascii_height(tab[i][j] % 10) / 2);
-                int x = (j * board.tiles_w + board.tiles_w / 2) - (get_ascii_number_width(tab[i][j]) / 2);
-                if (tab[i][j] != 0)
+                int y = (i * board.tiles_h + board.tiles_h / 2) - i - (get_ascii_height((*tab)[i][j] % 10) / 2);
+                int x = (j * board.tiles_w + board.tiles_w / 2) - (get_ascii_number_width((*tab)[i][j]) / 2);
+                if ((*tab)[i][j] != 0)
                 {
-                    set_color(tab[i][j]);
-                    draw_ascii_number(y, x, tab[i][j]);
+                    set_color((*tab)[i][j]);
+                    draw_ascii_number(y, x, (*tab)[i][j]);
                     standend();
                 }
             }
             else
             {
                 int y = (i * board.tiles_h + board.tiles_h / 2) - i;
-                int x = (j * board.tiles_w + board.tiles_w / 2) - (ft_intlen(tab[i][j]) / 2);
-                if (tab[i][j] != 0)
+                int x = (j * board.tiles_w + board.tiles_w / 2) - (ft_intlen((*tab)[i][j]) / 2);
+                if ((*tab)[i][j] != 0)
                 {
-                    set_color(tab[i][j]);
-                    mvprintw(y, x, "%d", tab[i][j]);
+                    set_color((*tab)[i][j]);
+                    mvprintw(y, x, "%d", (*tab)[i][j]);
                     standend();
                 }
             }
@@ -75,7 +75,7 @@ void put_numbers(int **tab, t_board board, int h, int w)
     }
 }
 
-void draw_board(t_board board, int **tab)
+void draw_board(t_board board, int (*tab)[board.size][board.size])
 {
     int h, w;
     getmaxyx(stdscr, h, w);
@@ -89,8 +89,8 @@ void draw_board(t_board board, int **tab)
             draw_line(board);
     }
     draw_separation(board);
-    put_colors(tab, board);
-    put_numbers(tab, board, h, w);
+    put_colors(board, tab);
+    put_numbers(board, tab, h, w);
 }
 
 void set_color(int nb)
