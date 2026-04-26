@@ -26,7 +26,13 @@ int main(void)
             write_score(board.score);
             break;
         }
-
+        int h, w;
+        getmaxyx(stdscr, h, w);
+        if (h < 19 || w < 38)
+        {
+            erase();
+            continue;
+        }
         result = check_finish(board, &game_board, continue_game);
 
         if (result == 0)

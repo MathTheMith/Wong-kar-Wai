@@ -20,9 +20,14 @@ int main(void)
         ch = getch();
         if (ch == 27)
             break;
-
+        int h, w;
+        getmaxyx(stdscr, h, w);
+        if (h < 9 || w < 24)
+        {
+            erase();
+            continue;
+        }
         result = check_finish(board, &game_board, continue_game);
-
         if (result == 0)
         {
             erase();

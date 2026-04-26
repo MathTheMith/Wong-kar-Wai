@@ -69,7 +69,7 @@ int show_menu(void)
         }
         else
             by -= 5;
-        if (w > 35)
+        if (w > 35 && h > 15)
         {
             attron(COLOR_PAIR(23));
             mvprintw(by,      bx, "+--------------------------------+");
